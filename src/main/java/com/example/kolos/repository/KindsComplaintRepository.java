@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface KindsComplaintRepositor extends JpaRepository<KindsComplaint, Long> {
+public interface KindsComplaintRepository extends JpaRepository<KindsComplaint, Long> {
 }
 
 

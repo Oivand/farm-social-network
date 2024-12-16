@@ -10,7 +10,9 @@ import java.time.LocalDateTime;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.FetchType;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name="publications")
 public class Publication {

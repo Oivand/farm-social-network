@@ -1,9 +1,11 @@
 package com.example.kolos.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 @Entity
 @Table(name="complaints")
 public class Complaints {
@@ -14,7 +16,7 @@ public class Complaints {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kind_complaint", nullable = false)
-    private KindsComplaint kindcomplaint;
+    private KindsComplaint kindСomplaint;
 
     @Column(name="description_complaint")
     private String descriptionComplaint;

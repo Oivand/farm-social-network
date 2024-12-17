@@ -6,9 +6,9 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class KindsComplaintController {
-    private final KindsComplaintService kindsComplaintService;
-
-    public KindsComplaintController(KindsComplaintService kindsComplaintService) {
-        this.kindsComplaintService = kindsComplaintService;
-    }
+//    private final KindsComplaintService kindsComplaintService;
+//
+//    public KindsComplaintController(KindsComplaintService kindsComplaintService) {
+//        this.kindsComplaintService = kindsComplaintService;
+//    }
 }

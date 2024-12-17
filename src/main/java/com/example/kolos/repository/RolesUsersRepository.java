@@ -8,10 +8,7 @@ import java.util.List;
 
 @Repository
 public interface RolesUsersRepository extends JpaRepository<RolesUsers, Long> {
-    //найти регион по айди
-    List<RolesUsers> findByIdRoleUser(Long idRoleUser);
-
     //найти роли по названию
-    List<RolesUsers> findByUserRole(String userRole);
+    List<RolesUsers> findByUserRoleOrderByUserRoleAsc(String userRole);
 
 }

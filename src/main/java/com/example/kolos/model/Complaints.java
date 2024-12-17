@@ -16,19 +16,27 @@ public class Complaints {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kind_complaint", nullable = false)
-    private KindsComplaint kindСomplaint;
+    private KindsComplaint kindComplaint; // С латинской "C"
 
     @Column(name="description_complaint")
     private String descriptionComplaint;
 
-    @Column(name="id_accused")
-    private int idAccused;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_accused", nullable = false)
+    private User idAccused;
 
-    @Column(name="id_accuser")
-    private int idAccuser;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_accuser", nullable = false)
+    private User idAccuser;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
     public Complaints(){}
 }
+

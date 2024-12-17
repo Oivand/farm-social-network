@@ -20,5 +20,5 @@ public class KindsComplaint {
     @Column(name="name_kind_complaint")
     private String nameKindComplaint;
 
-    public KindsComplaint(){}
+    public KindsComplaint() {}
 }

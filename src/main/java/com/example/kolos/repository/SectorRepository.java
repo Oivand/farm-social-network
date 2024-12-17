@@ -5,12 +5,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SectorRepository extends JpaRepository<Sector, Long> {
-    //найти сектор по айди
-    List<Sector> findByIdSector(Long idSector);
+
+    //List<Sector> findAllByOrderByNameSectorAsc(); вроде не нужно
 
     //найти сектор по названию
-    List<Sector> findByNameSector(String nameSector);
+    List<Sector> findByNameSectorContaining(String nameSector);
 }
+
+/*
+Containing
+ */

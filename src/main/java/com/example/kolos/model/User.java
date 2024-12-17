@@ -1,5 +1,6 @@
 package com.example.kolos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Table;
@@ -14,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
@@ -55,21 +58,26 @@ public class User {
     @JoinColumn(name = "user_sector", nullable = false)
     private Sector sector;
 
-    @Column(name="bio")
+    @Column(name="bio", nullable = true)
     private String bio;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @Column(name = "last_since_time")
     private LocalDateTime lastSinceTime;
 
+    @JsonIgnore
     @Column(name = "hash_password")
     private String password;
 
     public User() {}
 
 }
+
+

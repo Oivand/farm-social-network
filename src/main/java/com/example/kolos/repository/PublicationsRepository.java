@@ -15,9 +15,6 @@ public interface PublicationsRepository extends JpaRepository<Publication, Long>
     // Найти публикацию по заголовку (для поиска)
     List<Publication> findByTitleContainingOrderByCreatedAtDesc(String title);
 
-    // Получить публикацию по ID
-    Optional<Publication> findByIdPublication(Long idPublication);
-
     // Получить последние опубликованные публикации
     List<Publication> findTop10ByOrderByCreatedAtDesc();
 

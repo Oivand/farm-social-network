@@ -9,9 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatsRepository extends JpaRepository<Chats, Long> {
-    // Найти чат по ID
-    Optional<Chats> findById(Long idChat);
-
     // Найти все чаты, созданные конкретным пользователем
     List<Chats> findByFounderChat(User founderChat);
 

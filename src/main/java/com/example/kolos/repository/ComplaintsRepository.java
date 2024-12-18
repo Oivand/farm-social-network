@@ -11,12 +11,6 @@ import java.util.List;
 @Repository
 public interface ComplaintsRepository extends JpaRepository<Complaints, Long> {
 
-/**
- * Найти жалобы по виду нарушения
- * ПОФИКСИТЬ ЭФЭАБФьМЩВЬЩИЯЗЩИЬЩЬИЗАВЬИ ЬАДИДЖАБ
- */
-List<Complaints> findBykindComplaint(KindsComplaint kindComplaint);
-
     // Найти жалобы по описанию (поиск подстроки)
     List<Complaints> findByDescriptionComplaintContaining(String descriptionComplaint);
 
@@ -29,7 +23,6 @@ List<Complaints> findBykindComplaint(KindsComplaint kindComplaint);
     // Найти 10 последних жалоб
     List<Complaints> findTop10ByOrderByCreatedAtDesc();
 
+    List<Complaints> findByKindComplaint(KindsComplaint kindComplaint);
 }
-
-
 

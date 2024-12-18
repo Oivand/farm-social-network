@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface RolesUsersRepository extends JpaRepository<RolesUsers, Long> {
     //найти роли по названию
-    List<RolesUsers> findByUserRoleOrderByUserRoleAsc(String userRole);
+    List<RolesUsers> findByUserRoleContainingOrderByUserRoleAsc(String userRole);
 
 }

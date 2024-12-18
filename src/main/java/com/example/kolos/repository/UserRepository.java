@@ -38,50 +38,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // Найти пользователя по сектору
     List<User> findBySector(Sector sector);
-
-//    // Обновление имени
-//    @Modifying
-//    @Query("UPDATE User u SET u.name = :name WHERE u.idUser = :id")
-//    void updateUserName(@Param("id") Long id, @Param("name") String name);
-//
-//    // Обновление фамилии
-//    @Modifying
-//    @Query("UPDATE User u SET u.surname = :surname WHERE u.idUser = :id")
-//    void updateUserSurname(@Param("id") Long id, @Param("surname") String surname);
-//
-//    // Обновление email
-//    @Modifying
-//    @Query("UPDATE User u SET u.email = :email WHERE u.idUser = :id")
-//    void updateUserEmail(@Param("id") Long id, @Param("email") String email);
-//
-//    // Обновление номера телефона
-//    @Modifying
-//    @Query("UPDATE User u SET u.phone = :phone WHERE u.idUser = :id")
-//    void updateUserPhone(@Param("id") Long id, @Param("phone") String phone);
-//
-//    // Обновление биографии
-//    @Modifying
-//    @Query("UPDATE User u SET u.bio = :bio WHERE u.idUser = :id")
-//    void updateUserBio(@Param("id") Long id, @Param("bio") String bio);
-//
-//    // Обновление региона
-//    @Modifying
-//    @Query("UPDATE User u SET u.userRegion = :region WHERE u.idUser = :id")
-//    void updateUserRegion(@Param("id") Long id, @Param("region") Region region);
-//
-//    // Обновление роли пользователя
-//    @Modifying
-//    @Query("UPDATE User u SET u.role = :role WHERE u.idUser = :id")
-//    void updateUserRole(@Param("id") Long id, @Param("role") RolesUsers role);
-//
-//    // Обновление сектора пользователя
-//    @Modifying
-//    @Query("UPDATE User u SET u.sector = :sector WHERE u.idUser = :id")
-//    void updateUserSector(@Param("id") Long id, @Param("sector") Sector sector);
-//
-//    // Удаление пользователя по ID
-//    @Modifying
-//    @Query("DELETE FROM User u WHERE u.idUser = :id")
-//    void deleteUserById(@Param("id") Long id);
 }
 

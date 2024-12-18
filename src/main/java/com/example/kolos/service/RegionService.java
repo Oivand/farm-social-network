@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor // Lombok создаст конструктор с @Autowired для всех final полей
-public class RegionService implements RegionServiceInterface {
+public class RegionService /*implements RegionServiceInterface {
     private final RegionRepository regionRepository;  // Lombok создаст конструктор для этого поля
 
     @Override
@@ -27,4 +27,4 @@ public class RegionService implements RegionServiceInterface {
     public List<Region> getAllRegions() {
         return regionRepository.findAll();
     }
-}
+}*/{}

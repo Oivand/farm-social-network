@@ -9,12 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface RegionRepository extends JpaRepository<Region, Long>{
-    // найти все региора по айди
-    Optional<Region> findById(Long idRegion);
 
     //найти регионы по назанию
     List<Region> findByNameRegionContaining(String nameRegion);
-
-    List<Region> findAll();
-
 }
+
+

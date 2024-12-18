@@ -8,7 +8,7 @@ import com.example.kolos.model.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserServiceInterface {
+public interface UserInterface {
 
     // Найти пользователя по email
     Optional<User> findUserByEmail(String email);

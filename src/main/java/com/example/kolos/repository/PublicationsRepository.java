@@ -4,8 +4,8 @@ import com.example.kolos.model.Publication;
 import com.example.kolos.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface PublicationsRepository extends JpaRepository<Publication, Long> {
@@ -18,8 +18,6 @@ public interface PublicationsRepository extends JpaRepository<Publication, Long>
     // Получить последние опубликованные публикации
     List<Publication> findTop10ByOrderByCreatedAtDesc();
 
-    //найти по слову из описания
+    // Найти по слову из описания
     List<Publication> findByDescriptionContainingOrderByCreatedAtDesc(String description);
-
-
 }

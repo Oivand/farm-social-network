@@ -1,12 +1,13 @@
-package com.example.kolos.interfaces;
+package com.example.kolos.service;
 
 import com.example.kolos.model.Complaints;
 import com.example.kolos.model.KindsComplaint;
 import com.example.kolos.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface ComplaintsInterface {
+public interface ComplaintsService {
 
     // Найти жалобы по описанию (поиск подстроки)
     List<Complaints> findComplaintsByDescription(String descriptionComplaint);
@@ -21,4 +22,9 @@ public interface ComplaintsInterface {
     List<Complaints> findComplaints10Latest();
 
     List<Complaints> findComplaintsByKind(KindsComplaint kindComplaint);
+
+    Optional<Complaints> findById(Long idComplaint);
+
+    List<Complaints> findAll();
+
 }

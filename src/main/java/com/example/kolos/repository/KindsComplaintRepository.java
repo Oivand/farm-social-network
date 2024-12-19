@@ -12,3 +12,5 @@ public interface KindsComplaintRepository extends JpaRepository<KindsComplaint, 
     List<KindsComplaint> findByNameKindComplaintContainingOrderByNameKindComplaint(String nameKindComplaint);
 
 }
+
+

@@ -1,4 +1,4 @@
-package com.example.kolos.interfaces;
+package com.example.kolos.service;
 
 import com.example.kolos.model.Region;
 import com.example.kolos.model.RolesUsers;
@@ -8,7 +8,7 @@ import com.example.kolos.model.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserInterface {
+public interface UserService {
 
     // Найти пользователя по email
     Optional<User> findUserByEmail(String email);

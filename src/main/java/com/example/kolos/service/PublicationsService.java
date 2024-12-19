@@ -1,18 +1,13 @@
-package com.example.kolos.interfaces;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+package com.example.kolos.service;
 
 import com.example.kolos.model.Publication;
 import com.example.kolos.model.User;
 
-public interface PublicationsInterface {
+import java.util.List;
+
+public interface PublicationsService {
     List<Publication> find10LatestPublication();
-
     List<Publication> findPublicationByDescription(String description);
-
     List<Publication> findPublicationByTitle(String title);
-
     List<Publication> findPublicationByAuthor(User author);
 }

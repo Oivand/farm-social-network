@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class SectorServiceImpl implements SectorService {
-    
+
     private final SectorRepository sectorRepository;
 
     public SectorServiceImpl(SectorRepository sectorRepository) {
@@ -19,11 +19,17 @@ public class SectorServiceImpl implements SectorService {
 
     @Override
     public List<Sector> findSectorByName(String nameSector) {
+        if (nameSector == null || nameSector.isEmpty()) {
+            throw new IllegalArgumentException("Sector name cannot be null or empty.");
+        }
         return sectorRepository.findByNameSectorContaining(nameSector);
     }
 
     @Override
     public Optional<Sector> findById(Long idSector) {
+        if (idSector == null) {
+            throw new IllegalArgumentException("Sector ID cannot be null.");
+        }
         return sectorRepository.findById(idSector);
     }
 

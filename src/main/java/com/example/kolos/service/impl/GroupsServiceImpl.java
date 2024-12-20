@@ -19,21 +19,34 @@ public class GroupsServiceImpl implements GroupsService {
 
     @Override
     public List<Groups> findGroupByGroupName(String groupName) {
+        if (groupName == null || groupName.isEmpty()) {
+            return findAll();
+        }
         return groupsRepository.findByGroupNameContainingOrderByCreatedAtDesc(groupName);
     }
 
     @Override
     public List<Groups> findGroupByMaster(User groupMaster) {
+        if (groupMaster == null) {
+            throw new IllegalArgumentException("Group master cannot be null");
+        }
         return groupsRepository.findByGroupMasterOrderByCreatedAtDesc(groupMaster);
     }
 
     @Override
     public Optional<Groups> findById(Long idGroup) {
+        if (idGroup == null) {
+            throw new IllegalArgumentException("Group ID cannot be null");
+        }
         return groupsRepository.findById(idGroup);
     }
 
     @Override
     public List<Groups> findAll() {
-        return groupsRepository.findAll();
+        List<Groups> allGroups = groupsRepository.findAll();
+        if (allGroups.isEmpty()) {
+            throw new IllegalStateException("No groups found");
+        }
+        return allGroups;
     }
 }

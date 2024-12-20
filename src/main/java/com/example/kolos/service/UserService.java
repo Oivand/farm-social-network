@@ -33,4 +33,8 @@ public interface UserService {
 
     // Найти пользователя по сектору
     List<User> findUserBySector(Sector sector);
+
+    Optional<User> findById(Long idUser);
+
+    List<User> findAll();
 }

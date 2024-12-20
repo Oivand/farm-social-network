@@ -19,16 +19,25 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public List<Region> findRegionsByName(String nameRegion) {
+        // Проверка на null или пустое значение
+        if (nameRegion == null || nameRegion.trim().isEmpty()) {
+            throw new IllegalArgumentException("Region name cannot be null or empty.");
+        }
         return regionRepository.findByNameRegionContaining(nameRegion);
     }
 
     @Override
     public List<Region> findAll() {
+        // Возвращаем все регионы, здесь проверки не требуются
         return regionRepository.findAll();
     }
 
     @Override
     public Optional<Region> findById(Long idRegion) {
+        // Проверка на null для idRegion
+        if (idRegion == null) {
+            throw new IllegalArgumentException("Region ID cannot be null.");
+        }
         return regionRepository.findById(idRegion);
     }
 }

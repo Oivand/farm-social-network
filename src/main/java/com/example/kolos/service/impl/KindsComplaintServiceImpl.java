@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class KindsComplaintServiceImpl implements KindsComplaintService {
 
-   private final KindsComplaintRepository kindsComplaintRepository;
+    private final KindsComplaintRepository kindsComplaintRepository;
 
     @Autowired
     public KindsComplaintServiceImpl(KindsComplaintRepository kindsComplaintRepository) {
@@ -21,16 +21,23 @@ public class KindsComplaintServiceImpl implements KindsComplaintService {
 
     @Override
     public Optional<KindsComplaint> findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Ошибка: ID вида жалобы (id) не может быть null.");
+        }
         return kindsComplaintRepository.findById(id);
     }
 
     @Override
     public List<KindsComplaint> findAll() {
-        return kindsComplaintRepository.findAll();
+        return kindsComplaintRepository.findAll(); // Предполагаем, что findAll всегда содержит данные
     }
 
     @Override
     public List<KindsComplaint> getKindComplaintsByName(String nameKindComplaint) {
+        if (nameKindComplaint == null || nameKindComplaint.isEmpty()) {
+            throw new IllegalArgumentException("Ошибка: название вида жалобы (nameKindComplaint) не может быть null или пустым.");
+        }
         return kindsComplaintRepository.findByNameKindComplaintContainingOrderByNameKindComplaint(nameKindComplaint);
     }
+
 }

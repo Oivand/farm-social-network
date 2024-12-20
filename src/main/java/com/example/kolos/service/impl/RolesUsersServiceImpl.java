@@ -20,16 +20,23 @@ public class RolesUsersServiceImpl implements RolesUsersService {
 
     @Override
     public List<RolesUsers> searchRolesByName(String userRole) {
+        if (userRole == null || userRole.isEmpty()) {
+            throw new IllegalArgumentException("User Role cannot be null or empty.");
+        }
         return rolesUsersRepository.findByUserRoleContainingOrderByUserRoleAsc(userRole);  // Используем репозиторий
     }
 
     @Override
     public List<RolesUsers> findAll() {
+
         return rolesUsersRepository.findAll();  // Используем репозиторий
     }
 
     @Override
     public Optional<RolesUsers> findById(Long idRoleUser) {
+        if (idRoleUser == null) {
+            throw new IllegalArgumentException("ID  of user role cannot be null");
+        }
         return rolesUsersRepository.findById(idRoleUser);  // Используем репозиторий
     }
 }

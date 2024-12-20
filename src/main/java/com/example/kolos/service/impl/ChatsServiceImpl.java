@@ -19,21 +19,34 @@ public class ChatsServiceImpl implements ChatsService {
 
     @Override
     public List<Chats> findChatsUserAsFounder(User founderChat) {
+        if (founderChat == null) {
+            throw new IllegalArgumentException("Ошибка: Владелец чата (founderChat) не указан.");
+        }
         return chatsRepository.findByFounderChat(founderChat);
     }
 
     @Override
     public List<Chats> findChatsUserAsMembers(User member) {
+        if (member == null) {
+            throw new IllegalArgumentException("Ошибка: Участник чата (member) не указан.");
+        }
         return chatsRepository.findByMembers(member);
     }
 
     @Override
     public Optional<Chats> findById(Long idChat) {
+        if (idChat == null) {
+            throw new IllegalArgumentException("Ошибка: ID чата (idChat) не указан.");
+        }
         return chatsRepository.findById(idChat);
     }
 
     @Override
     public List<Chats> findAll() {
-        return chatsRepository.findAll();
+        List<Chats> chats = chatsRepository.findAll();
+        if (chats.isEmpty()) {
+            throw new IllegalStateException("Ошибка: Список чатов пуст. Чаты не найдены.");
+        }
+        return chats;
     }
 }

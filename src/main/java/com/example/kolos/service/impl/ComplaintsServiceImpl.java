@@ -21,36 +21,64 @@ public class ComplaintsServiceImpl implements ComplaintsService {
 
     @Override
     public List<Complaints> findComplaintsByDescription(String descriptionComplaint) {
+        if (descriptionComplaint == null || descriptionComplaint.isEmpty()) {
+            throw new IllegalArgumentException("Описание жалобы не может быть пустым.");
+        }
         return complaintsRepository.findByDescriptionComplaintContaining(descriptionComplaint);
     }
 
     @Override
     public List<Complaints> findComplaintsByAccused(User idAccused) {
+        if (idAccused == null) {
+            throw new IllegalArgumentException("Должен быть указан обвиняемый пользователь.");
+        }
         return complaintsRepository.findByIdAccused(idAccused);
     }
 
     @Override
     public List<Complaints> findComplaintsByAccuser(User idAccuser) {
+        if (idAccuser == null) {
+            throw new IllegalArgumentException("Должен быть указан истец.");
+        }
         return complaintsRepository.findByIdAccuser(idAccuser);
     }
 
     @Override
     public List<Complaints> findComplaints10Latest() {
-        return complaintsRepository.findTop10ByOrderByCreatedAtDesc();
+        List<Complaints> latestComplaints = complaintsRepository.findTop10ByOrderByCreatedAtDesc();
+        if (latestComplaints.isEmpty()) {
+            throw new IllegalStateException("Не найдено ни одной жалобы.");
+        }
+        return latestComplaints;
     }
 
     @Override
     public List<Complaints> findComplaintsByKind(KindsComplaint kindComplaint) {
+        if (kindComplaint == null) {
+            throw new IllegalArgumentException("Тип жалобы не может быть пустым.");
+        }
         return complaintsRepository.findByKindComplaint(kindComplaint);
     }
 
     @Override
     public Optional<Complaints> findById(Long idComplaint) {
-        return complaintsRepository.findById(idComplaint);
+        if (idComplaint == null) {
+            throw new IllegalArgumentException("ID жалобы не может быть пустым.");
+        }
+        Optional<Complaints> complaint = complaintsRepository.findById(idComplaint);
+        if (complaint.isEmpty()) {
+            throw new IllegalStateException("Жалоба с указанным ID не найдена.");
+        }
+        return complaint;
     }
 
     @Override
     public List<Complaints> findAll() {
-        return complaintsRepository.findAll();
+        List<Complaints> allComplaints = complaintsRepository.findAll();
+        if (allComplaints.isEmpty()) {
+            throw new IllegalStateException("В базе данных отсутствуют жалобы.");
+        }
+        return allComplaints;
     }
+
 }

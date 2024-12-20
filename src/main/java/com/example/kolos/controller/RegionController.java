@@ -28,4 +28,14 @@ public class RegionController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Region>> getRegionsByName(@RequestParam String region) {
+        if (region == null || region.isEmpty()) {
+            return ResponseEntity.badRequest().build(); // Возвращаем 400, если имя не указано
+        }
+        List<Region> regions = regionService.findRegionsByName(region);
+        return regions.isEmpty() ? ResponseEntity.noContent().build() :
+                ResponseEntity.ok(regions);
+    }
 }

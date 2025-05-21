@@ -10,9 +10,6 @@ import java.util.List;
 public interface KindsComplaintRepository extends JpaRepository<KindsComplaint, Long> {
     //найти по названию
     List<KindsComplaint> findByNameKindComplaintContainingOrderByNameKindComplaint(String nameKindComplaint);
-
-    //добавить новый вид нарушения
-
 }
 
 

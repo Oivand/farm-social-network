@@ -14,8 +14,9 @@ public interface ComplaintsRepository extends JpaRepository<Complaints, Long> {
     List<Complaints> findByDescriptionComplaintContaining(String descriptionComplaint);
 
     // Найти жалобы по обвиняемому
-    List<Complaints> findByIdAccused_Id(Long idAccused);
+    List<Complaints> findByIdAccused(Long idAccused);
 
+    List<Complaints> findByIdAccuser_IdUser(Long idAccuser);
     // Найти жалобы по истцу
     List<Complaints> findByIdAccuser(Long idAccuser);
 

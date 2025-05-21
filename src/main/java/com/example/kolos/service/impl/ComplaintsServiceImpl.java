@@ -30,7 +30,7 @@ public class ComplaintsServiceImpl implements ComplaintsService {
         if (idAccused == null) {
             throw new IllegalArgumentException("ID обвиняемого не может быть null.");
         }
-        return complaintsRepository.findByIdAccused_Id(idAccused);
+        return complaintsRepository.findByIdAccused(idAccused);
     }
 
 

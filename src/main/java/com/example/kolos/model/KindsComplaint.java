@@ -17,7 +17,7 @@ public class KindsComplaint {
     @Column(name="id_kind_complaint")
     private Long idKindComplaint;
 
-    @Column(name="name_kind_complaint")
+    @Column(name="name_kind_complaint", nullable = false)
     private String nameKindComplaint;
 
     public KindsComplaint() {}

@@ -11,6 +11,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.FetchType;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
@@ -31,15 +33,16 @@ public class Publication {
     @Column(name="title")
     private String title;
 
+    @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt; 
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt; 
+    private LocalDateTime updatedAt;
 
     @Column(name="path_media")
     private String pathMedia;
 
     public Publication(){}
-    
 }

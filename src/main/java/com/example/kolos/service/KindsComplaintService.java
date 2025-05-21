@@ -12,4 +12,8 @@ public interface KindsComplaintService {
     List<KindsComplaint> findAll();
 
     Optional<KindsComplaint> findById(Long id);
+    KindsComplaint save(KindsComplaint kind);
+    void delete(Long id);
+
+
 }

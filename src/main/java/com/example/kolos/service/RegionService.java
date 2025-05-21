@@ -12,4 +12,8 @@ public interface RegionService {
     List<Region> findAll();
 
     Optional<Region> findById(Long idRegion);
+
+    Region save(Region region);
+
+
 }

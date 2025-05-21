@@ -38,4 +38,11 @@ public class RegionController {
         return regions.isEmpty() ? ResponseEntity.noContent().build() :
                 ResponseEntity.ok(regions);
     }
+
+    @PostMapping
+    ResponseEntity<Region> addKind(@RequestBody Region region) {
+        Region saved = regionService.save(region);
+        return ResponseEntity.ok(saved);
+
+    }
 }

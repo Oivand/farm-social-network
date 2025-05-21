@@ -40,4 +40,15 @@ public class KindsComplaintServiceImpl implements KindsComplaintService {
         return kindsComplaintRepository.findByNameKindComplaintContainingOrderByNameKindComplaint(nameKindComplaint);
     }
 
+    @Override
+    public KindsComplaint save(KindsComplaint kind) {
+        return kindsComplaintRepository.save(kind);
+    }
+
+    @Override
+    public void delete(Long id) {
+        kindsComplaintRepository.deleteById(id);
+    }
+
+
 }

@@ -12,4 +12,6 @@ public interface PublicationsService {
     List<Publication> findPublicationByTitle(String title);
     List<Publication> findPublicationByAuthor(User author);
     Optional<Publication> findById(Long idPublication);
+    List<Publication> findPublicationByAuthorId(Long authorId);
+
 }

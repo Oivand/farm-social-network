@@ -38,4 +38,16 @@ public class KindsComplaintController {
         return kinds.isEmpty() ? ResponseEntity.noContent().build() :
                 ResponseEntity.ok(kinds);
     }
+
+    @PostMapping
+    public ResponseEntity<KindsComplaint> addKind(@RequestBody KindsComplaint kind) {
+        KindsComplaint saved = kindsComplaintService.save(kind);
+        return ResponseEntity.ok(saved);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteKindsComplaint(@PathVariable Long id) {
+        kindsComplaintService.delete(id);
+        return ResponseEntity.noContent().build(); // Возвращает статус 204, что означает успешное удаление
+    }
 }

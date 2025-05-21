@@ -2,7 +2,6 @@ package com.example.kolos.repository;
 
 import com.example.kolos.model.Complaints;
 import com.example.kolos.model.KindsComplaint;
-import com.example.kolos.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,14 +14,14 @@ public interface ComplaintsRepository extends JpaRepository<Complaints, Long> {
     List<Complaints> findByDescriptionComplaintContaining(String descriptionComplaint);
 
     // Найти жалобы по обвиняемому
-    List<Complaints> findByIdAccused(User idAccused);
+    List<Complaints> findByIdAccused_Id(Long idAccused);
 
     // Найти жалобы по истцу
-    List<Complaints> findByIdAccuser(User idAccuser);
+    List<Complaints> findByIdAccuser(Long idAccuser);
 
     // Найти 10 последних жалоб
     List<Complaints> findTop10ByOrderByCreatedAtDesc();
 
-    List<Complaints> findByKindComplaint(KindsComplaint kindComplaint);
+    List<Complaints> findByKindComplaint(Long kindComplaint);
 }
 

@@ -40,4 +40,9 @@ public class RegionServiceImpl implements RegionService {
         }
         return regionRepository.findById(idRegion);
     }
+
+    @Override
+    public Region save(Region region){
+        return regionRepository.save(region);
+    }
 }

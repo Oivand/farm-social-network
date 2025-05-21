@@ -1,8 +1,6 @@
 package com.example.kolos.service.impl;
 
 import com.example.kolos.model.Complaints;
-import com.example.kolos.model.KindsComplaint;
-import com.example.kolos.model.User;
 import com.example.kolos.repository.ComplaintsRepository;
 import com.example.kolos.service.ComplaintsService;
 import org.springframework.stereotype.Service;
@@ -28,15 +26,17 @@ public class ComplaintsServiceImpl implements ComplaintsService {
     }
 
     @Override
-    public List<Complaints> findComplaintsByAccused(User idAccused) {
+    public List<Complaints> findComplaintsByAccusedId(Long idAccused) {
         if (idAccused == null) {
-            throw new IllegalArgumentException("Должен быть указан обвиняемый пользователь.");
+            throw new IllegalArgumentException("ID обвиняемого не может быть null.");
         }
-        return complaintsRepository.findByIdAccused(idAccused);
+        return complaintsRepository.findByIdAccused_Id(idAccused);
     }
 
+
+
     @Override
-    public List<Complaints> findComplaintsByAccuser(User idAccuser) {
+    public List<Complaints> findComplaintsByAccuser(Long idAccuser) {
         if (idAccuser == null) {
             throw new IllegalArgumentException("Должен быть указан истец.");
         }
@@ -53,7 +53,7 @@ public class ComplaintsServiceImpl implements ComplaintsService {
     }
 
     @Override
-    public List<Complaints> findComplaintsByKind(KindsComplaint kindComplaint) {
+    public List<Complaints> findComplaintsByKind(Long kindComplaint) {
         if (kindComplaint == null) {
             throw new IllegalArgumentException("Тип жалобы не может быть пустым.");
         }

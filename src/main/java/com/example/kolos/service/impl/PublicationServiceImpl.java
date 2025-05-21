@@ -3,6 +3,7 @@ package com.example.kolos.service.impl;
 import com.example.kolos.model.Publication;
 import com.example.kolos.model.User;
 import com.example.kolos.repository.PublicationsRepository;
+import com.example.kolos.repository.UserRepository;
 import com.example.kolos.service.PublicationsService;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,11 @@ import java.util.Optional;
 public class PublicationServiceImpl implements PublicationsService {
 
     private final PublicationsRepository publicationsRepository;
+    private final UserRepository userRepository;
 
-    public PublicationServiceImpl(PublicationsRepository publicationsRepository) {
+    public PublicationServiceImpl(PublicationsRepository publicationsRepository, UserRepository userRepository) {
         this.publicationsRepository = publicationsRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -57,5 +60,17 @@ public class PublicationServiceImpl implements PublicationsService {
             throw new IllegalArgumentException("Ошибка: ID публикации (id) не может быть null.");
         }
         return publicationsRepository.findById(idPublication);
+    }
+
+    @Override
+    public List<Publication> findPublicationByAuthorId(Long authorId) {
+        if (authorId == null) {
+            throw new IllegalArgumentException("Author ID cannot be null.");
+        }
+
+        User author = userRepository.findById(authorId)
+                .orElseThrow(() -> new IllegalArgumentException("Author not found with ID: " + authorId));
+
+        return findPublicationByAuthor(author); // используешь уже готовый метод
     }
 }

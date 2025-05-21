@@ -25,16 +25,18 @@ public interface UserService {
     // Найти пользователя по имени и фамилии
     List<User> findUserByNameAndSurname(String name, String surname);
 
-    // Найти пользователя по региону
+    // Найти пользователей по региону
     List<User> findUserByRegion(Region userRegion);
 
-    // Найти пользователя по роли
+    // Найти пользователей по роли
     List<User> findUserByRole(RolesUsers role);
 
-    // Найти пользователя по сектору
+    // Найти пользователей по сектору
     List<User> findUserBySector(Sector sector);
 
+    // Найти пользователя по ID
     Optional<User> findById(Long idUser);
 
+    // Получить всех пользователей
     List<User> findAll();
 }

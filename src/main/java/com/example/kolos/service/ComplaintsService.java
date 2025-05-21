@@ -8,20 +8,26 @@ import java.util.Optional;
 public interface ComplaintsService {
 
     // Найти жалобы по описанию (поиск подстроки)
-    List<Complaints> findComplaintsByDescription(String descriptionComplaint);
+    List<Complaints> findComplaintsByDescriptionContaining(String description);
 
     // Найти жалобы по обвиняемому
-    List<Complaints> findComplaintsByAccusedId(Long idAccused);
+    List<Complaints> findComplaintsByAccusedId(Long accusedId);
 
     // Найти жалобы по истцу
-    List<Complaints> findComplaintsByAccuser(Long idAccuser);
+    List<Complaints> findComplaintsByAccuserId(Long accuserId);
 
     // Найти 10 последних жалоб
-    List<Complaints> findComplaints10Latest();
+    List<Complaints> findTop10ComplaintsOrderByCreatedAtDesc();
 
-    List<Complaints> findComplaintsByKind(Long kindComplaint);
+    // Найти жалобы по типу (виду) жалобы
+    List<Complaints> findComplaintsByKindId(Long kindComplaintId);
 
-    Optional<Complaints> findById(Long idComplaint);
+    // Найти жалобу по ID
+    Optional<Complaints> findById(Long complaintId);
 
+    // Получить все жалобы
     List<Complaints> findAll();
+
+    //сохранить новую жалобу
+    Complaints save(Complaints complaints);
 }

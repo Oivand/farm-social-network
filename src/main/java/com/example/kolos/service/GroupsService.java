@@ -7,13 +7,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface GroupsService {
-    //найти группу по ее названию
-    List<Groups> findGroupByGroupName(String groupName) ;
+    // Найти группу по её названию
+    List<Groups> findGroupsByNameContaining(String groupName);
 
-    //найти все созданные человеком группы
-    List<Groups> findGroupByMaster (User groupMaster);
+    // Найти все группы, созданные конкретным пользователем
+    List<Groups> findGroupsByCreator(User groupMaster);
 
-    Optional<Groups> findById(Long idGroup);
+    // Найти группу по ID
+    Optional<Groups> findById(Long groupId);
 
+    // Получить все группы
     List<Groups> findAll();
 }

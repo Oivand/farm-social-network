@@ -23,25 +23,25 @@ public class Publication {
     @Column(name="id_publication")
     private Long idPublication;
 
-    @JoinColumn(name="id_author")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // Consider adding optional = false if author is always required
+    @JoinColumn(name="id_author", nullable = false) // Added nullable = false assuming author is mandatory
     private User author;
 
-    @Column(name="description")
+    @Column(name="description", columnDefinition = "TEXT") // Use TEXT for potentially long descriptions
     private String description;
 
-    @Column(name="title")
+    @Column(name="title", nullable = false) // Title is usually mandatory
     private String title;
 
     @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false, nullable = false) // created_at should not be updatable
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false) // updated_at should always be set
     private LocalDateTime updatedAt;
 
-    @Column(name="path_media")
+    @Column(name="path_media") // This could be a URL or a file path. Consider validation later.
     private String pathMedia;
 
     public Publication(){}

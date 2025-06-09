@@ -7,15 +7,21 @@ import java.util.Optional;
 
 public interface KindsComplaintService {
 
-    // Найти типы жалоб по названию
-    List<KindsComplaint> findKindsByNameContaining(String nameKindComplaint);
+    // Changed to reflect exact search
+    // It's more common to return Optional<KindsComplaint> if you expect a single unique result
+    // but we can stick to List<KindsComplaint> for consistency with controller's /search endpoint if desired.
+    // I'll keep List<KindsComplaint> for consistency with how RegionService handles this for now.
+    List<KindsComplaint> findKindByName(String nameKindComplaint); // Renamed from findKindsByNameContaining
 
-    // Получить все типы жалоб
+    // Get all complaint kinds
     List<KindsComplaint> findAll();
 
-    // Найти тип жалобы по ID
+    // Find complaint kind by ID
     Optional<KindsComplaint> findById(Long id);
 
-    // Сохранить новый тип жалобы
+    // Save a new or updated complaint kind
     KindsComplaint save(KindsComplaint kindComplaint);
+
+    // Delete a complaint kind
+    void delete(Long id); // Added the delete method
 }

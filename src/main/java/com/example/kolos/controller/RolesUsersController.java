@@ -8,10 +8,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/roles")
-public class RolesUsersContoller {
+public class RolesUsersController {
     private final RolesUsersService rolesUsersService;
 
-    public RolesUsersContoller(RolesUsersService rolesUsersService) {
+    public RolesUsersController(RolesUsersService rolesUsersService) {
         this.rolesUsersService = rolesUsersService;
     }
     @GetMapping

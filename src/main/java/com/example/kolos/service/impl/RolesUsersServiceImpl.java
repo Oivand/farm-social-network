@@ -1,7 +1,7 @@
 package com.example.kolos.service.impl;
 
 import com.example.kolos.model.RolesUsers;
-import com.example.kolos.repository.RolesUsersRepository;  // Репозиторий
+import com.example.kolos.repository.RolesUsersRepository;
 import com.example.kolos.service.RolesUsersService;
 import org.springframework.stereotype.Service;
 
@@ -11,32 +11,32 @@ import java.util.Optional;
 @Service
 public class RolesUsersServiceImpl implements RolesUsersService {
 
-    private final RolesUsersRepository rolesUsersRepository;  // Репозиторий
+    private final RolesUsersRepository rolesUsersRepository;
 
-    // Конструктор для внедрения репозитория
     public RolesUsersServiceImpl(RolesUsersRepository rolesUsersRepository) {
         this.rolesUsersRepository = rolesUsersRepository;
     }
 
     @Override
     public List<RolesUsers> searchRolesByName(String userRole) {
-        if (userRole == null || userRole.isEmpty()) {
+        if (userRole == null || userRole.trim().isEmpty()) {
             throw new IllegalArgumentException("User Role cannot be null or empty.");
         }
-        return rolesUsersRepository.findByUserRoleContainingOrderByUserRoleAsc(userRole);  // Используем репозиторий
+        // Изменение: Теперь просто возвращаем список. Если ничего не найдено,
+        // вернется пустой список, что будет обработано контроллером.
+        return rolesUsersRepository.findByUserRoleContainingOrderByUserRoleAsc(userRole);
     }
 
     @Override
     public List<RolesUsers> findAll() {
-
-        return rolesUsersRepository.findAll();  // Используем репозиторий
+        return rolesUsersRepository.findAll();
     }
 
     @Override
     public Optional<RolesUsers> findById(Long idRoleUser) {
         if (idRoleUser == null) {
-            throw new IllegalArgumentException("ID  of user role cannot be null");
+            throw new IllegalArgumentException("ID of user role cannot be null.");
         }
-        return rolesUsersRepository.findById(idRoleUser);  // Используем репозиторий
+        return rolesUsersRepository.findById(idRoleUser);
     }
 }

@@ -2,8 +2,10 @@ package com.example.kolos.controller;
 
 import com.example.kolos.model.KindsComplaint;
 import com.example.kolos.service.KindsComplaintService;
+import org.springframework.http.HttpStatus; // For HttpStatus.BAD_REQUEST
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.net.URI; // For Location header
 
 import java.util.List;
 
@@ -30,24 +32,37 @@ public class KindsComplaintController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<KindsComplaint>> getKindsComplaintByName(@RequestParam String kind){
-        if(kind == null || kind.isEmpty()){
+    // Now performs an exact search, returning a list (0 or 1 element)
+    public ResponseEntity<List<KindsComplaint>> getKindComplaintByName(@RequestParam String name) { // Renamed param to 'name' for clarity
+        if(name == null || name.trim().isEmpty()){ // Added trim()
             return ResponseEntity.badRequest().build();
         }
-        List<KindsComplaint> kinds = kindsComplaintService.getKindComplaintsByName(kind);
+        List<KindsComplaint> kinds = kindsComplaintService.findKindByName(name); // Use the renamed service method
+        // If list is empty, return 204 No Content. Otherwise, 200 OK with the list.
         return kinds.isEmpty() ? ResponseEntity.noContent().build() :
                 ResponseEntity.ok(kinds);
     }
 
     @PostMapping
-    public ResponseEntity<KindsComplaint> addKind(@RequestBody KindsComplaint kind) {
-        KindsComplaint saved = kindsComplaintService.save(kind);
-        return ResponseEntity.ok(saved);
+    // Renamed method to be more descriptive
+    public ResponseEntity<KindsComplaint> createKindComplaint(@RequestBody KindsComplaint kind) {
+        if (kind == null || kind.getNameKindComplaint() == null || kind.getNameKindComplaint().trim().isEmpty()) { // Added trim()
+            return ResponseEntity.badRequest().build();
+        }
+        // For new resources, ID should be null
+        if (kind.getIdKindComplaint() != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null); // Or include a more specific error message
+        }
+        KindsComplaint savedKind = kindsComplaintService.save(kind);
+        // Return 201 Created status and include the Location header
+        return ResponseEntity.created(URI.create("/kindsComplaint/" + savedKind.getIdKindComplaint())).body(savedKind);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteKindsComplaint(@PathVariable Long id) {
         kindsComplaintService.delete(id);
-        return ResponseEntity.noContent().build(); // Возвращает статус 204, что означает успешное удаление
+        // Return 204 No Content for successful deletion
+        return ResponseEntity.noContent().build();
     }
 }

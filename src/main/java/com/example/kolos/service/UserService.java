@@ -51,4 +51,6 @@ public interface UserService {
     List<User> findUserByNickname(String nickname);
     List<User> findUserByDateOfBirth(LocalDate dateOfBirth); // Requires import java.time.LocalDate List<User> findUserByDateOfBirth(LocalDate dateOfBirth);
     // --- End of added methods ---
+
+    Optional<User> findByNicknameExact(String nickname); // НОВОЕ НАЗВАНИЕ!
 }

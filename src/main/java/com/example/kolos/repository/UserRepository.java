@@ -1,9 +1,9 @@
 package com.example.kolos.repository;
 
-import com.example.kolos.model.User;
 import com.example.kolos.model.Region;
 import com.example.kolos.model.RolesUsers;
 import com.example.kolos.model.Sector;
+import com.example.kolos.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,33 +14,25 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Найти пользователя по email
     Optional<User> findByEmail(String email);
-
-    // Найти пользователя по номеру телефона
     Optional<User> findByPhone(String phone);
+    Optional<User> findByNickname(String nickname); // For exact nickname match (e.g., for uniqueness)
 
-    // Найти пользователя по имени (с частичным совпадением) и отсортировать по имени
+    // For methods returning List<User> that use 'Containing' and 'OrderBy'
     List<User> findByNameContainingOrderByNameAsc(String name);
-
-    // Найти пользователя по фамилии (с частичным совпадением) и отсортировать по фамилии
     List<User> findBySurnameContainingOrderBySurnameAsc(String surname);
+    List<User> findByNameAndSurname(String name, String surname); // If this is exact match, otherwise adjust
 
-    // Найти пользователя по имени и фамилии
-    List<User> findByNameAndSurname(String name, String surname);
-
-    // Найти пользователя по региону
     List<User> findByUserRegion(Region userRegion);
-
-    // Найти пользователя по роли
     List<User> findByRole(RolesUsers role);
-
-    // Найти пользователя по сектору
     List<User> findBySector(Sector sector);
 
-    // Найти пользователя по никнейму (с частичным совпадением)
-    List<User> findByNicknameContainingOrderByNicknameAsc(String nickname);
-
-    // Найти пользователя по дате рождения
+    List<User> findByNicknameContainingOrderByNicknameAsc(String nickname); // For partial nickname search
     List<User> findByDateOfBirth(LocalDate dateOfBirth);
+
+    // If you need more specific searches, e.g., case-insensitive containing:
+    // List<User> findByNameContainingIgnoreCaseOrderByNameAsc(String name);
+    // List<User> findBySurnameContainingIgnoreCaseOrderBySurnameAsc(String surname);
+    // List<User> findByNameContainingIgnoreCaseAndSurnameContainingIgnoreCase(String name, String surname);
+    // List<User> findByNicknameContainingIgnoreCaseOrderByNicknameAsc(String nickname);
 }

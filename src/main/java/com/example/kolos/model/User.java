@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GenerationType;
@@ -17,11 +19,14 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails; // <-- Важный импорт
 
 @Data
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails { // <-- ДОБАВЛЕНО: implements UserDetails
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,18 +46,27 @@ public class User {
     private String surname;
 
     @Column(nullable = false, unique = true)
-    private String nickname;
+    private String nickname; // Будет использоваться как username для Spring Security
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
+    // Это поле будет использоваться Spring Security для определения строковых ролей (например, "ROLE_USER")
+    // Имя столбца остается 'role_rights', как вы указали.
+    // 'nullable = false' - если вы хотите, чтобы столбец был NOT NULL в БД.
+    // 'columnDefinition' обеспечивает значение по умолчанию для новых записей в БД.
+    @Column(name = "role_rights", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'ROLE_USER'")
+    private String role_rights;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_region", nullable = false)
     private Region userRegion;
 
+    // Это поле представляет собой связь с таблицей ролей (RolesUsers),
+    // оно отличается от role_rights, которое является строкой для Spring Security GrantedAuthority.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_role", nullable = false)
-    private RolesUsers role;
+    private RolesUsers role; // Название поля 'role', но столбец 'user_role'
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_sector", nullable = false)
@@ -72,12 +86,51 @@ public class User {
     @Column(name = "last_since_time")
     private LocalDateTime lastSinceTime;
 
-    @JsonIgnore
-    @Column(name = "hash_password")
-    private String password;
+    @JsonIgnore // Пароль не будет сериализоваться в JSON ответ
+    @Column(name = "hash_password") // Имя столбца 'hash_password', как вы указали
+    private String password; // Будет использоваться как password для Spring Security
 
     public User() {}
 
+    // --- Методы интерфейса UserDetails ---
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Используем поле 'role_rights' для Spring Security, т.к. оно строковое и содержит имя роли.
+        // Предполагаем, что 'role_rights' уже содержит префикс "ROLE_" (например, "ROLE_USER").
+        return Collections.singletonList(new SimpleGrantedAuthority(this.role_rights));
+    }
+
+    @Override
+    public String getUsername() {
+        // Возвращает имя пользователя (логин) для Spring Security.
+        return this.nickname;
+    }
+
+    @Override
+    public String getPassword() {
+        // Возвращает пароль для Spring Security.
+        // Соответствует столбцу 'hash_password' и полю 'password'.
+        return this.password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
-
-

@@ -42,7 +42,7 @@ public class JwtTokenUtil {
 
     // Извлечение всех "заявок" из токена
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parserBuilder()
+        return Jwts.parser()
                 .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)

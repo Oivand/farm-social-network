@@ -1,0 +1,20 @@
+curl -v -X POST \
+  http://localhost:8081/register \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "email": "testuser@example.com",
+    "phone": "+79001234567",
+    "name": "Тест",
+    "surname": "Пользователь",
+    "nickname": "test_user_1",
+    "password": "SecurePassword123",
+    "idRoleUser": 1,
+    "idSector": 1,
+    "idRegion": 1,
+    "dateOfBirth": "1990-05-15"
+  }'
+
+curl -v -X POST http://localhost:8081/authenticate  -H 'Content-Type: application/json' -d '{"password": "SecurePassword123", "nickname": "test_user_1"}'
+
+
+  //jwt.secret=aBWG6jeWxuO3nSlLbmPF5nt4LuUiyEQNdOdU7bBhgrT328NgyZTKa0f1GCW7n5wMVDGgF/hsIcbNi0PV1bCUbg==

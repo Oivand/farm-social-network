@@ -1,6 +1,7 @@
 package com.example.kolos.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Table;
@@ -59,7 +60,7 @@ public class User implements UserDetails { // <-- ДОБАВЛЕНО: implements
     private String role_rights;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_region", nullable = false)
+    @JoinColumn(name = "user_region", nullable = true)
     private Region userRegion;
 
     // Это поле представляет собой связь с таблицей ролей (RolesUsers),
@@ -86,7 +87,7 @@ public class User implements UserDetails { // <-- ДОБАВЛЕНО: implements
     @Column(name = "last_since_time")
     private LocalDateTime lastSinceTime;
 
-    @JsonIgnore // Пароль не будет сериализоваться в JSON ответ
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "hash_password") // Имя столбца 'hash_password', как вы указали
     private String password; // Будет использоваться как password для Spring Security
 
@@ -133,4 +134,5 @@ public class User implements UserDetails { // <-- ДОБАВЛЕНО: implements
     public boolean isEnabled() {
         return true;
     }
+
 }

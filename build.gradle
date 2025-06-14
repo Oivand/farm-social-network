@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.4.0'
+	id 'org.springframework.boot' version '3.3.1' // <-- ИЗМЕНЕНО: Стабильная версия Spring Boot
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
@@ -27,20 +27,22 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// Добавленные зависимости для Spring Security и JWT
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5' // Используйте актуальную версию
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5' // Используйте актуальную версию
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // Используйте актуальную версию (нужен Jackson для JWT)
+
+	// <-- ИЗМЕНЕНО: Обновленные версии JJWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	// https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api
+
 	implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '3.1.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.postgresql:postgresql'
 
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0' // Используйте актуальную версию
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 }
 
 tasks.named('test') {

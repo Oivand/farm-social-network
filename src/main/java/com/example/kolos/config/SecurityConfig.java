@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity; // Для @PreAuthorize
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,11 +17,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
-@EnableWebSecurity // Включает веб-безопасность Spring Security
-@EnableMethodSecurity(prePostEnabled = true) // Включает аннотации @PreAuthorize, @PostAuthorize
+@EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -39,13 +38,11 @@ public class SecurityConfig {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // Определяем AuthenticationManager, который будет использоваться для аутентификации пользователей
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    // Настраиваем DaoAuthenticationProvider для работы с CustomUserDetailsService и PasswordEncoder
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -54,42 +51,44 @@ public class SecurityConfig {
         return authProvider;
     }
 
-    // Основная цепочка фильтров безопасности
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Отключаем CSRF, так как JWT защищает от CSRF по своей природе
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Применяем CORS (если нужен)
+                .csrf(csrf -> csrf.disable()) // <-- Отключаем CSRF
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .exceptionHandling(exceptionHandling ->
-                        exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)) // Обработка неаутентифицированных запросов
+                        exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint)) // <-- Обработчик исключений
                 .sessionManagement(sessionManagement ->
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Сессия не используется, так как у нас JWT
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        // Разрешаем доступ без аутентификации к эндпоинту аутентификации и регистрации
-                        .requestMatchers("/authenticate", "/register", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        // Разрешаем доступ без аутентификации к определенным эндпоинтам
+                        .requestMatchers("/authenticate", "/register",
+                                "/regions",
+                                "/sectors",
+                                "/swagger-ui/**", "/v3/api-docs/**", "/kindsComplaint", "/roles").permitAll()
                         // Все остальные запросы требуют аутентификации
                         .anyRequest().authenticated()
                 );
 
-        // Добавляем наш JWT фильтр перед UsernamePasswordAuthenticationFilter
+        // Добавляем ваш JWT-фильтр
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // Включаем провайдер аутентификации
+        // Добавляем провайдер аутентификации
         http.authenticationProvider(authenticationProvider());
 
         return http.build();
     }
 
-    // CORS Configuration (если ваше фронтенд-приложение находится на другом домене/порту)
+
     @Bean
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*"); // Разрешить любой домен (для разработки). В продакшене укажите конкретные домены.
-        configuration.addAllowedMethod("*"); // Разрешить все HTTP методы (GET, POST, PUT, DELETE, etc.)
-        configuration.addAllowedHeader("*"); // Разрешить все заголовки
-        configuration.setAllowCredentials(true); // Разрешить отправку куки и заголовков авторизации
+        configuration.addAllowedOrigin("http://localhost:5173");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Применить CORS ко всем путям
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }

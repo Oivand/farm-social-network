@@ -1,0 +1,15 @@
+POST http://localhost:8081/register
+Content-Type: application/json
+
+{
+  "email": "asdadad@example.com",
+  "phone": "+1234567890",
+  "name": "John",
+  "surname": "Doe",
+  "nickname": "dfugiodfhgs",
+  "password": "sdfgsdjfkgsd",
+  "idRoleUser": 1,
+  "idSector": 1,
+  "idRegion": 1,
+  "dateOfBirth": "1990-01-01"
+}

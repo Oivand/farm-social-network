@@ -2,6 +2,7 @@ package com.example.kolos.service.impl;
 
 import com.example.kolos.model.User;
 import com.example.kolos.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,21 +12,16 @@ import java.util.Collections;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.password.PasswordEncoder; // <-- ДОБАВИТЬ ЭТОТ ИМПОРТ
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder; // <-- ДОБАВИТЬ ЭТО ПОЛЕ
-
-    // <-- ИЗМЕНИТЬ КОНСТРУКТОР
-    public CustomUserDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder; // <-- ИНИЦИАЛИЗИРОВАТЬ ЕГО
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -37,8 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         logger.debug("Password from DB (hashed): {}", user.getPassword());
         logger.debug("Role from DB: {}", user.getRole_rights());
 
-        // --- НОВЫЙ ЛОГ: КАКОЙ ЭКЗЕМПЛЯР PASSWORDENCODER ИСПОЛЬЗУЕТСЯ ---
-        if (passwordEncoder != null) { // Проверка на null, если вдруг не инжектируется
+        if (passwordEncoder != null) {
             logger.debug("PasswordEncoder CLASS in CustomUserDetailsService: {}", passwordEncoder.getClass().getName());
             logger.debug("Is it DelegatingPasswordEncoder? {}", (passwordEncoder instanceof org.springframework.security.crypto.password.DelegatingPasswordEncoder));
         } else {

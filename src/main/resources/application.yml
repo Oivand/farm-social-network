@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: kolos
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kolos
+    username: user
+    password: user
+jwt:
+  secret: FtVgo5SKPRC6jTZ8vj/FYlAMxLXCmVGoSaUt4s9DL5jS+cNLJRs+/tQGhBMaKYB0bj3c6denwYrg5JFmiDVSOg==
+  expiration: 7200000
+server:
+  port: 8081
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    com:
+      example:
+        kolos: DEBUG
+

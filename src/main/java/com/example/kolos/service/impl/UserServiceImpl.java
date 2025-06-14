@@ -9,7 +9,8 @@ import com.example.kolos.repository.RolesUsersRepository;
 import com.example.kolos.repository.SectorRepository;
 import com.example.kolos.repository.UserRepository;
 import com.example.kolos.service.UserService;
-import org.springframework.security.crypto.password.PasswordEncoder; // Import PasswordEncoder
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional; // For transactional operations
 
@@ -18,25 +19,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RegionRepository regionRepository;
     private final RolesUsersRepository rolesUsersRepository;
     private final SectorRepository sectorRepository;
-    private final PasswordEncoder passwordEncoder; // ADDED: PasswordEncoder dependency
-
-    public UserServiceImpl(UserRepository userRepository,
-                           RegionRepository regionRepository,
-                           RolesUsersRepository rolesUsersRepository,
-                           SectorRepository sectorRepository,
-                           PasswordEncoder passwordEncoder) { // ADDED: PasswordEncoder in constructor
-        this.userRepository = userRepository;
-        this.regionRepository = regionRepository;
-        this.rolesUsersRepository = rolesUsersRepository;
-        this.sectorRepository = sectorRepository;
-        this.passwordEncoder = passwordEncoder; // Initialize PasswordEncoder
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<User> findByNicknameExact(String nickname) {
@@ -100,7 +90,7 @@ public class UserServiceImpl implements UserService {
         // Only encrypt if the password is new or explicitly changed (for existing users, this should be handled carefully)
         // For new users, we always encrypt the provided password
         if (user.getIdUser() == null || (user.getPassword() != null && !user.getPassword().isEmpty())) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPassword(user.getPassword());
         }
         // --- END PASSWORD ENCRYPTION ---
 

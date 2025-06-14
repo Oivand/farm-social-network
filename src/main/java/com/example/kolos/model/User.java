@@ -1,6 +1,5 @@
 package com.example.kolos.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,14 +16,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails; // <-- Важный импорт
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "users")
 public class User implements UserDetails { // <-- ДОБАВЛЕНО: implements UserDetails
@@ -90,8 +93,6 @@ public class User implements UserDetails { // <-- ДОБАВЛЕНО: implements
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "hash_password") // Имя столбца 'hash_password', как вы указали
     private String password; // Будет использоваться как password для Spring Security
-
-    public User() {}
 
     // --- Методы интерфейса UserDetails ---
 

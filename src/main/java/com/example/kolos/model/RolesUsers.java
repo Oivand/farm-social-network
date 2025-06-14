@@ -5,9 +5,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "roles_users")
 public class RolesUsers {
@@ -19,5 +23,4 @@ public class RolesUsers {
     @Column(nullable = false, unique = true, name = "name_user_role")
     private String userRole;
 
-    public RolesUsers() {}
 }

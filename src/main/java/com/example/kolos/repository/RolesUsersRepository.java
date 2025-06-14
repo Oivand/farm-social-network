@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface RolesUsersRepository extends JpaRepository<RolesUsers, Long> {
-    //найти роли по названию
+    RolesUsers findByUserRole(String userRole);
+
     List<RolesUsers> findByUserRoleContainingOrderByUserRoleAsc(String userRole);
 
 }
